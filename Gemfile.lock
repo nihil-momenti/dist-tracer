@@ -1,6 +1,13 @@
 GIT
+  remote: git://github.com/Nemo157/geom3d.git
+  revision: 264d6283dacdf0fc47b8b28c3252db7de611cc88
+  branch: master
+  specs:
+    geom3d (0.0.1)
+
+GIT
   remote: git://github.com/Nemo157/rubytracer.git
-  revision: 215dd4c22320c18557f5c012398ae383f177f171
+  revision: fd6aa9fc19c9284c9437e3432c761a7741074561
   branch: master
   specs:
     rubytracer (0.0.1)
@@ -14,5 +21,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  geom3d!
   redis
   rubytracer!
