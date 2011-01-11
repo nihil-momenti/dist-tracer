@@ -1,0 +1,18 @@
+GIT
+  remote: git://github.com/Nemo157/rubytracer.git
+  revision: 215dd4c22320c18557f5c012398ae383f177f171
+  branch: master
+  specs:
+    rubytracer (0.0.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    redis (2.1.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  redis
+  rubytracer!
