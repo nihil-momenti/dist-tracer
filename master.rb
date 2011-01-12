@@ -38,14 +38,18 @@ class Master
   end
 
   def image
-    pix = @collected.sort_by! { |obj| obj.part_id }
-                    .map { |obj| obj.result }
+    pix = @collected.sort_by! { |job| job.part_id }
+                    .map { |job| job.result }
                     .flatten
-                    .map { |obj| obj.to_int }
+                    .map { |job| job.to_int }
     File.open('output.json', 'w') do |file|
       file << { :height => @height, :width => @width, :id => @job_id, :data => pix }.to_json
     end
 
     `./convert.py`
+  end
+
+  def cpu_time
+    @collected.map { |job| job.time }.inject(:+)
   end
 end

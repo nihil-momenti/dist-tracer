@@ -8,6 +8,8 @@ require_relative 'master'
 include Rubytracer
 include Geom3d
 
+start_time = Time.now
+
 WIDTH = 640
 HEIGHT = 400
 
@@ -34,3 +36,8 @@ master.post_jobs
 master.collect_jobs
 
 puts master.image
+
+end_time = Time.now
+
+puts "Total time: #{end_time - start_time}"
+puts "CPU time: #{master.cpu_time}"
