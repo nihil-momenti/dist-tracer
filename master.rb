@@ -52,4 +52,12 @@ class Master
   def cpu_time
     @collected.map { |job| job.time }.inject(:+)
   end
+
+  def hosts_with_counts
+    hash = Hash.new(0)
+    @collected.each do |job|
+      hash[job.hostname] += 1
+    end
+    return hash
+  end
 end
