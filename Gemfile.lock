@@ -1,13 +1,13 @@
 GIT
   remote: git://github.com/Nemo157/geom3d.git
-  revision: 264d6283dacdf0fc47b8b28c3252db7de611cc88
+  revision: b8a5833c6d96081884c82e5fabf6b013e9e5b911
   branch: master
   specs:
     geom3d (0.0.1)
 
 GIT
   remote: git://github.com/Nemo157/rubytracer.git
-  revision: fd6aa9fc19c9284c9437e3432c761a7741074561
+  revision: 1e74a0b28f706577ed75ad42ad45a0a369e12ce2
   branch: master
   specs:
     rubytracer (0.0.1)

@@ -1,1 +1,5 @@
 .rvmrc
+redis-2.0.4
+image*.bmp
+output.json
+dump.rdb
