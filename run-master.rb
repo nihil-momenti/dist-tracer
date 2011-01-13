@@ -41,13 +41,7 @@ job_generation_end_time = Time.now
 available_hosts = `cat /netfs/share/whichprinter/csse_lab?  | sed 's/$/.cosc.canterbury.ac.nz 22/' | xargs -n2 nc -w 2 -z -v 2> /dev/null | egrep -o "cosc[0-9]+\.cosc\.canterbury\.ac\.nz"`.split << 'localhost'
 available_hosts.each do |host|
   puts "Spawning clients on #{host}"
-#  puts "ssh #{host} \"screen -d -m -S tracer_client \\\"cd ~/sources/dist-tracer && bundle exec ./run-client.rb\\\"\""
- # puts `ssh #{host} "screen -d -m -S tracer_client \\"cd ~/sources/dist-tracer && bundle exec ./run-client.rb\\""`
-#  puts "ssh #{host} \"screen -d -m -S tracer_client \\\"cd ~/sources/dist-tracer && ~/.rvm/bin/tracer_bundle exec ./run-client.rb\\\"\""
-  puts "ssh #{host} screen -d -m \"zsh -c \\\"cd ~/sources/dist-tracer && ~/.rvm/bin/tracer_bundle exec ./run-client.rb\\\"\""
-  puts `ssh #{host} screen -d -m "zsh -c \\"cd ~/sources/dist-tracer && ~/.rvm/bin/tracer_bundle exec ./run-client.rb\\""`
-#  puts `ssh #{host} "cd ~/sources/dist-tracer && ~/.rvm/bin/tracer_bundle exec ./run-client.rb"`
-#  puts "ssh #{host} \"cd ~/sources/dist-tracer && ~/.rvm/bin/tracer_bundle exec ./run-client.rb\""
+  `ssh #{host} screen -d -m "zsh -c \\"cd ~/sources/dist-tracer && ~/.rvm/bin/tracer_bundle exec ./run-client.rb\\""`
 end
 
 client_spawn_end_time = Time.now
