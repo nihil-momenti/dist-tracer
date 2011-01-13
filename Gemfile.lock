@@ -1,26 +1,14 @@
-GIT
-  remote: git://github.com/Nemo157/geom3d.git
-  revision: b8a5833c6d96081884c82e5fabf6b013e9e5b911
-  branch: master
-  specs:
-    geom3d (0.0.1)
-
-GIT
-  remote: git://github.com/Nemo157/rubytracer.git
-  revision: 1e74a0b28f706577ed75ad42ad45a0a369e12ce2
-  branch: master
-  specs:
-    rubytracer (0.0.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
+    geom3d (0.1.1)
     redis (2.1.1)
+    rubytracer (0.1.0)
+      geom3d
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  geom3d!
   redis
-  rubytracer!
+  rubytracer
