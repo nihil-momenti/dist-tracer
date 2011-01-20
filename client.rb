@@ -3,6 +3,7 @@ require 'rubytracer'
 require 'geom3d'
 require_relative 'job'
 require 'socket'
+require 'pp'
 
 class Client
   def initialize(redis)
@@ -25,6 +26,7 @@ class Client
   end
 
   def do_stuff(data)
+    pp data
     row = data[:row]
     width = data[:width]
     camera = data[:camera]

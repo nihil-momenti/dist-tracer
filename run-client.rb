@@ -4,6 +4,7 @@ require 'redis'
 require_relative 'client'
 
 cores = `grep -c "processor" /proc/cpuinfo`.to_i
+cores = 1
 
 puts "Spawning #{cores} forks"
 
