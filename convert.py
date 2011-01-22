@@ -3,8 +3,9 @@
 from PIL import Image
 import json
 import sys
+import msgpack
 
-output = json.load(sys.stdin)
+output = msgpack.unpackb(sys.stdin.read())
 
 width = output['width']
 height = output['height']

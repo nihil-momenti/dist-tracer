@@ -17,6 +17,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     json (1.4.6)
+    msgpack (0.4.4)
     rack (1.2.1)
     rake (0.8.7)
     redis (2.1.1)
@@ -39,6 +40,7 @@ PLATFORMS
 
 DEPENDENCIES
   geom3d!
+  msgpack
   rake
   redis
   resque

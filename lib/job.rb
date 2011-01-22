@@ -1,5 +1,6 @@
 require 'socket'
 require 'rubytracer'
+require 'msgpack'
 
 require 'time_block'
 require 'environment'
@@ -42,8 +43,7 @@ class Job
                      .flatten
                      .map { |colour| colour.to_int }
       IO.popen('./convert.py', 'w') do |w|
-        w.write({ :height => view.height, :width => view.width, :id => job_id, :data => pix }.to_json)
-        w.write "\n"
+        w.write({ :height => view.height, :width => view.width, :id => job_id, :data => pix }.to_msgpack)
         w.close_write
       end
     end
