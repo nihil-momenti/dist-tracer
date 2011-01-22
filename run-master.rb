@@ -1,12 +1,14 @@
 #!/usr/bin/env ruby
+#
+$: << File.join(File.dirname(__FILE__), 'lib')
 
 require 'geom3d'
 require 'rubytracer'
 
-require_relative 'job'
-require_relative 'part'
-require_relative 'time_block'
-require_relative 'environment'
+require 'job'
+require 'part'
+require 'time_block'
+require 'environment'
 
 include Rubytracer
 include Geom3d

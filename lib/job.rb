@@ -1,7 +1,8 @@
 require 'socket'
 require 'rubytracer'
-require_relative 'time_block'
-require_relative 'environment'
+
+require 'time_block'
+require 'environment'
 
 class Job
   @queue = "jobs"

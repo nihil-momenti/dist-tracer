@@ -1,7 +1,7 @@
 require 'resque/tasks'
 
 task 'resque:setup' do
-  require_relative 'job'
+  require 'environment'
 end
 
 namespace :tracer do
