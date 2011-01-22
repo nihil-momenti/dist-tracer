@@ -23,10 +23,11 @@ class Job
   end
 
   def self.perform job_id
+    view = Job[job_id].view
     collected = []
 
     collection_time = time_block do
-      outstanding = Job[job_id].view.height.times.to_a
+      outstanding = view.height.times.to_a
       until outstanding.empty?
         queue, result = $redis.blpop "jobs:#{job_id}:results", 0
         result = Marshal::load(result)
@@ -40,11 +41,10 @@ class Job
                      .map { |result| result[:colours] }
                      .flatten
                      .map { |colour| colour.to_int }
-      IO.pipe do |r, w|
-        pid = spawn('./convert.py', :in => r)
-        w.write({ :height => height, :width => width, :id => job_id, :data => pix }.to_json)
-        w.close
-        Process.wait pid
+      IO.popen('./convert.py', 'w') do |w|
+        w.write({ :height => view.height, :width => view.width, :id => job_id, :data => pix }.to_json)
+        w.write "\n"
+        w.close_write
       end
     end
 

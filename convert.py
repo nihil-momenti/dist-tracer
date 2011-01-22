@@ -16,5 +16,3 @@ img = Image.new("RGB", (width, height))
 img.putdata(data)
 
 img.save(name)
-
-print name

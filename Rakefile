@@ -1,5 +1,7 @@
 require 'resque/tasks'
 
+$: << File.join(File.dirname(__FILE__), 'lib')
+
 task 'resque:setup' do
   require 'environment'
 end
@@ -12,7 +14,7 @@ namespace :tracer do
   namespace :workers do
     task :setup do
       ENV['COUNT'] = `grep -c "processor" /proc/cpuinfo`.strip
-      ENV['QUEUE'] = 'tracer:parts,tracer:jobs'
+      ENV['QUEUE'] = 'parts,jobs'
       #ENV['VERBOSE'] = '1'
     end
 
