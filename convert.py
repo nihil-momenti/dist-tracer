@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 from PIL import Image
-from json import load
+import json
+import sys
 
-output = load(file('output.json'))
+output = json.load(sys.stdin)
 
 width = output['width']
 height = output['height']
-name = 'image' + str(output['id']) + '.bmp'
+name = 'images/' + str(output['id']) + '/image.bmp'
 data = [ tuple(datum) for datum in output['data'] ]
 
 img = Image.new("RGB", (width, height))

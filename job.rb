@@ -4,7 +4,7 @@ require_relative 'time_block'
 require_relative 'environment'
 
 class Job
-  @queue = :tracer
+  @queue = "jobs"
 
   attr_reader :job_id, :view
 
@@ -14,19 +14,54 @@ class Job
   end
 
   def save
-    $redis.set "tracer:jobs:#{@job_id}", Marshal::dump(self)
+    $redis.set "jobs:#{@job_id}", Marshal::dump(self)
   end
 
-  def self.get job_id
-    Marshal::load $redis.get "tracer:jobs:#{job_id}"
+  def self.[] job_id
+    Marshal::load $redis.get "jobs:#{job_id}"
   end
 
-  def self.perform(job_id, row)
-    colours = nil
-    time = time_block do
-      colours = Job.get(job_id).view.colour_of_row(row)
+  def self.perform job_id
+    collected = []
+
+    collection_time = time_block do
+      outstanding = Job[job_id].view.height.times.to_a
+      until outstanding.empty?
+        queue, result = $redis.blpop "jobs:#{job_id}:results", 0
+        result = Marshal::load(result)
+        collected << result
+        outstanding.delete result[:row]
+      end
     end
-    value = { :row => row, :colours => colours, :time => time, :hostname => Socket.gethostname }
-    $redis.rpush "tracer:jobs:#{job_id}:results", Marshal::dump(value)
+    
+    generation_time = time_block do
+      pix = collected.sort_by! { |result| result[:row] }
+                     .map { |result| result[:colours] }
+                     .flatten
+                     .map { |colour| colour.to_int }
+      IO.pipe do |r, w|
+        pid = spawn('./convert.py', :in => r)
+        w.write({ :height => height, :width => width, :id => job_id, :data => pix }.to_json)
+        w.close
+        Process.wait pid
+      end
+    end
+
+    workers = Hash.new(0)
+    collected.each do |result|
+      workers[result[:hostname]] += 1
+    end
+
+    File.open(File.join('images', job_id.to_s, 'log'), 'a') do |log|
+      log << "Job collection time: #{collection_time}\n"
+      log << "Image composition time: #{generation_time}\n"
+      log << "\n"
+      log << "Total time used by clients: #{collected.map { |result| result[:time] }.inject(:+)}"
+      log << "\n"
+      log << "Workers used:\n"
+      workers.each do |worker, count|
+        log << "  #{worker} completed #{count} jobs\n"
+      end
+    end
   end
 end
